@@ -85,7 +85,7 @@ function! s:InRspecFile()
 endfunction
 
 function! s:InJavascriptFile()
-  return match(@%, '_spec\.\(js\.coffee\|js\|coffee\)$') != -1
+  return match(@%, '_spec\.\(js\.coffee\|js\.es6\|js\|coffee\|es6\)$') != -1
 endfunction
 
 function! s:Preloader()

@@ -42,7 +42,7 @@ describe 'Vim Spec Runner' do
         create_gemfile_with('teaspoon')
       end
 
-      %w(.coffee .js.coffee .js).each do |extension|
+      %w(.coffee .js.coffee .js .es6 .js.es6).each do |extension|
         context "with a JS spec ending in #{extension}" do
           it 'runs teaspoon directly' do
             spec = "person_spec#{extension}"
