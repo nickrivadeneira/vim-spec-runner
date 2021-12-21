@@ -197,6 +197,6 @@ nnoremap <silent> <Plug>RunFocusedSpec :RunFocusedSpec<CR>
 nnoremap <silent> <Plug>RunMostRecentSpec :RunMostRecentSpec<CR>
 
 " Default key mappings
-call s:MapIfUnmapped('a', '<Plug>RunCurrentSpecFile')
-call s:MapIfUnmapped('l', '<Plug>RunFocusedSpec')
-call s:MapIfUnmapped('r', '<Plug>RunMostRecentSpec')
+call s:MapIfUnmapped('t', '<Plug>RunCurrentSpecFile')
+call s:MapIfUnmapped('s', '<Plug>RunFocusedSpec')
+call s:MapIfUnmapped('l', '<Plug>RunMostRecentSpec')
