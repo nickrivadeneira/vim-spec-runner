@@ -38,6 +38,10 @@ function! s:RunMostRecentSpecOrWarn(warning_message)
   endif
 endfunction
 
+function! s:RunAllSpecs()
+  call s:RunSpecCommand(s:Runner())
+endfunction
+
 function! s:RunSpecCommand(command)
   let s:most_recent_command = a:command
   let executable_command = substitute(g:spec_runner_dispatcher, '{command}', a:command, 'g')
@@ -190,13 +194,16 @@ endfunction
 command! RunCurrentSpecFile call s:RunCurrentSpecFile()
 command! RunFocusedSpec call s:RunFocusedSpec()
 command! RunMostRecentSpec call s:RunMostRecentSpec()
+command! RunAllSpecs call s:RunAllSpecs()
 
 " Define plug mappings (essentially place holders, not actually bound to keys)
 nnoremap <silent> <Plug>RunCurrentSpecFile :RunCurrentSpecFile<CR>
 nnoremap <silent> <Plug>RunFocusedSpec :RunFocusedSpec<CR>
 nnoremap <silent> <Plug>RunMostRecentSpec :RunMostRecentSpec<CR>
+nnoremap <silent> <Plug>RunAllSpecs :RunAllSpecs<CR>
 
 " Default key mappings
 call s:MapIfUnmapped('t', '<Plug>RunCurrentSpecFile')
 call s:MapIfUnmapped('s', '<Plug>RunFocusedSpec')
 call s:MapIfUnmapped('l', '<Plug>RunMostRecentSpec')
+call s:MapIfUnmapped('a', '<Plug>RunAllSpecs')
