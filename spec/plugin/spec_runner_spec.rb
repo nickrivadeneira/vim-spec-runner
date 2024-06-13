@@ -37,66 +37,14 @@ describe 'Vim Spec Runner' do
       end
     end
 
-    context 'with the teaspoon gem installed' do
-      before do
-        create_gemfile_with('teaspoon')
-      end
+    context "with a JS spec ending in .test.tsx" do
+      it 'runs yarn test' do
+        spec = "person.test.tsx"
+        vim.edit spec
 
-      %w(.coffee .js.coffee .js).each do |extension|
-        context "with a JS spec ending in #{extension}" do
-          it 'runs teaspoon directly' do
-            spec = "person_spec#{extension}"
-            vim.edit spec
+        vim.command 'RunCurrentSpecFile'
 
-            vim.command 'RunCurrentSpecFile'
-
-            expect(command).to eq "teaspoon #{spec}"
-          end
-        end
-      end
-
-      context 'and zeus installed' do
-        it 'uses zeus rake teaspoon' do
-          set_up_zeus
-
-          vim.edit "person_spec.coffee"
-          vim.command 'RunCurrentSpecFile'
-
-          expect(command).to start_with 'zeus rake teaspoon'
-        end
-
-        it 'correctly runs a single file' do
-          set_up_zeus
-
-          vim.edit "person_spec.coffee"
-          vim.command 'RunCurrentSpecFile'
-
-          expect(command).to end_with ' files=person_spec.coffee'
-        end
-
-      end
-
-      context 'and the spring-commands-teaspoon gem installed' do
-        it 'uses spring' do
-          set_up_spring_for('teaspoon')
-
-          vim.edit "person_spec.coffee"
-          vim.command 'RunCurrentSpecFile'
-
-          expect(command).to start_with 'spring teaspoon'
-        end
-      end
-    end
-
-    context 'without the teaspoon gem installed' do
-      it 'does not run any command for JS' do
-        with_clean_vim do |clean_vim|
-          clean_vim.edit "person_spec.coffee"
-
-          clean_vim.command 'RunCurrentSpecFile'
-
-          expect(no_command_was_run).to be_true
-        end
+        expect(command).to eq "yarn test #{spec}"
       end
     end
 
@@ -191,19 +139,13 @@ describe 'Vim Spec Runner' do
       end
     end
 
-    context 'with the teaspoon gem installed' do
-      before do
-        create_gemfile_with('teaspoon')
-      end
+    context 'with a .test.tsx spec file' do
+      it 'runs yarn test, unfocused' do
+        vim.edit 'person.test.tsx'
 
-      context 'with a .coffee spec file' do
-        it 'runs teaspoon, unfocused' do
-          vim.edit 'person_spec.coffee'
+        vim.command 'RunFocusedSpec'
 
-          vim.command 'RunFocusedSpec'
-
-          expect(command).to end_with 'person_spec.coffee'
-        end
+        expect(command).to end_with 'person.test.tsx'
       end
     end
 
@@ -217,7 +159,7 @@ describe 'Vim Spec Runner' do
 
       run_spec_file
 
-      expect(File.exists?('command.txt')).to be_false
+      expect(File.exist?('command.txt')).to be_false
       expect(command('specific_file.txt')).to include 'rspec'
     end
   end
@@ -326,7 +268,7 @@ describe 'Vim Spec Runner' do
   end
 
   def command_was_run
-    File.exists?('command.txt')
+    File.exist?('command.txt')
   end
 
   def file_was_written(file_name)

@@ -73,12 +73,8 @@ endfunction
 function! s:Runner()
   if s:InRspecFile()
     return 'rspec'
-  elseif s:InJavascriptFile() && s:InGemfile('teaspoon')
-    if s:Preloader() ==# 'zeus'
-      return 'rake teaspoon'
-    else
-      return 'teaspoon'
-    endif
+  elseif s:InJavascriptFile()
+    return 'yarn test'
   else
     return s:NOT_IN_SPEC_FILE
   endif
@@ -89,7 +85,7 @@ function! s:InRspecFile()
 endfunction
 
 function! s:InJavascriptFile()
-  return match(@%, '_spec\.\(js\.coffee\|js\|coffee\)$') != -1
+  return match(@%, 'test\.tsx$') != -1
 endfunction
 
 function! s:Preloader()
